@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Add Teacher</h2>
+            <form id="add-teacher-form">
+                <input type="text" id="teacherName" placeholder="Teacher Name" required>
+                <input type="text" id="teacherDept" placeholder="Department" required>
+                <input type="text" id="teacherSubject" placeholder="Subject" required>
+                <button type="submit">Add Teacher</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Manage Teachers</h2>
+            <div id="teacher-list">
+                <!-- Teacher list will be dynamically added here -->
+            </div>
+        </section>
+
+        <section>
+            <h2>Approve Students</h2>
+            <div id="student-approval-list">
+                <!-- Student approval list will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Admin Dashboard</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>

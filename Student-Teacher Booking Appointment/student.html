@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Student Dashboard</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Search Teacher</h2>
+            <input type="text" id="searchTeacher" placeholder="Search by Name or Subject">
+            <div id="searchResults">
+                <!-- Search results will appear here -->
+            </div>
+        </section>
+
+        <section>
+            <h2>Book Appointment</h2>
+            <form id="book-appointment-form">
+                <input type="text" id="teacherName" placeholder="Teacher Name" required>
+                <input type="text" id="appointmentTime" placeholder="Preferred Time" required>
+                <input type="text" id="appointmentDate" placeholder="Preferred Date" required>
+                <button type="submit">Book Appointment</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Messages</h2>
+            <form id="send-message-form">
+                <textarea id="message" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Student Dashboard</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>
