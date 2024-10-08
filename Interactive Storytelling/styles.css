@@ -1,0 +1,46 @@
+body {
+  font-family: Arial, sans-serif;
+  background: url("forest\ background\ image.jpg") no-repeat center center fixed; /* Background image */
+  background-size: cover;
+  color: white;
+  margin: 0;
+  padding: 20px;
+}
+
+.story-container {
+  background: rgba(
+    0,
+    0,
+    0,
+    0.7
+  ); /* Slightly transparent background for readability */
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+  transition: opacity 0.5s;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.choices {
+  margin: 20px 0;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #218838;
+}
