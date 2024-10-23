@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Teacher Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <h1>Teacher Dashboard</h1>
+        <p>Manage Your Appointments and Messages</p>
+    </header>
+    <main>
+        <div class="container">
+            <section class="card">
+                <h2>Schedule Appointment</h2>
+                <form id="scheduleAppointmentForm">
+                    <input type="text" id="studentName" placeholder="Student Name" required>
+                    <input type="date" id="appointmentDate" required>
+                    <textarea id="appointmentMessage" placeholder="Enter a message..." required></textarea>
+                    <button type="submit">Schedule Appointment</button>
+                </form>
+            </section>
+
+            <section class="card">
+                <h2>Your Appointments</h2>
+                <ul id="appointmentList"></ul>
+            </section>
+
+            <section class="card">
+                <h2>Messages</h2>
+                <ul id="messageList"></ul>
+            </section>
+            <button id="logoutButton">Logout</button>
+            <script src="common.js"></script>
+            <script>
+                document.getElementById("logoutButton").addEventListener("click", logout);
+            </script>
+
+        </div>
+    </main>
+    <script src="firebaseConfig.js"></script>
+    <script src="teacher.js"></script>
+    <script>
+        const appointments = [];
+        const messages = []; // This can be fetched from a database
+
+        document.getElementById("scheduleAppointmentForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const studentName = document.getElementById("studentName").value;
+            const date = document.getElementById("appointmentDate").value;
+            const message = document.getElementById("appointmentMessage").value;
+
+            // Simulate scheduling an appointment (you can integrate with Firebase here)
+            const appointment = { studentName, date, message, status: 'Pending' };
+            appointments.push(appointment);
+            updateAppointmentList();
+
+            // Clear the form
+            this.reset();
+        });
+
+        function updateAppointmentList() {
+            const appointmentList = document.getElementById("appointmentList");
+            appointmentList.innerHTML = ''; // Clear existing list
+
+            appointments.forEach((appointment, index) => {
+                const appointmentItem = document.createElement("li");
+                appointmentItem.innerHTML = `
+                    ${appointment.studentName} - ${appointment.date} (${appointment.status}) 
+                    <button onclick="approveAppointment(${index})">Approve</button>
+                    <button onclick="cancelAppointment(${index})">Cancel</button>
+                `;
+                appointmentList.appendChild(appointmentItem);
+            });
+        }
+
+        function approveAppointment(index) {
+            appointments[index].status = 'Approved';
+            updateAppointmentList();
+        }
+
+        function cancelAppointment(index) {
+            appointments.splice(index, 1);
+            updateAppointmentList();
+        }
+
+        // document.getElementById("logoutButton").addEventListener("click", function () {
+        //     // Logic to log out the teacher (integrate with Firebase)
+        //     console.log("Teacher logged out");
+        //     alert("Logged out successfully!");
+        //     // Redirect to login page or perform logout operation
+        // });
+
+        // Sample data for messages
+        messages.push("You have an appointment request from John Doe.");
+        messages.push("Message from admin: Please check your schedule.");
+
+        function loadMessages() {
+            const messageList = document.getElementById("messageList");
+            messageList.innerHTML = ''; // Clear existing list
+
+            messages.forEach(message => {
+                const messageItem = document.createElement("li");
+                messageItem.textContent = message;
+                messageList.appendChild(messageItem);
+            });
+        }
+
+        // Load messages when the page loads
+        loadMessages();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <p>Manage Teachers and Approve Students</p>
+    </header>
+    <main>
+        <div class="container">
+            <section class="card">
+                <h2>Add Teacher</h2>
+                <form id="addTeacherForm">
+                    <input type="text" id="teacherName" placeholder="Name" required>
+                    <input type="text" id="teacherDepartment" placeholder="Department" required>
+                    <input type="text" id="teacherSubject" placeholder="Subject" required>
+                    <button type="submit">Add Teacher</button>
+                </form>
+            </section>
+
+            <section id="teacherManagement" class="card" style="display:none;">
+                <h2>Manage Teachers</h2>
+                <div id="teacherList">
+                    <h3>Teachers</h3>
+                    <ul id="teachers"></ul>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>Approve Student Registrations</h2>
+                <div id="studentList">
+                    <h3>Students</h3>
+                    <ul>
+                        <li>John Doe - Class 10 - 1234567890
+                            <button onclick="approveStudent('1')">Approve</button>
+                            <button onclick="deleteStudent('1')">Delete</button>
+                        </li>
+                        <li>Jane Smith - Class 11 - 0987654321
+                            <button onclick="approveStudent('2')">Approve</button>
+                            <button onclick="deleteStudent('2')">Delete</button>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+        <button id="logoutButton">Logout</button>
+        <script src="common.js"></script>
+        <script>
+            document.getElementById("logoutButton").addEventListener("click", logout);
+        </script>
+
+    </main>
+    <script src="firebaseConfig.js"></script>
+    <script src="admin.js"></script>
+    <script>
+        document.getElementById("addTeacherForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const name = document.getElementById("teacherName").value;
+            const department = document.getElementById("teacherDepartment").value;
+            const subject = document.getElementById("teacherSubject").value;
+
+            addTeacher(name, department, subject);
+            // Clear the form after submission
+            this.reset();
+        });
+
+        function addTeacher(name, department, subject) {
+            // Simulate saving to Firebase and getting an ID (mock)
+            const teacherId = Date.now(); // Mock ID
+            const teacherItem = document.createElement("li");
+            teacherItem.id = `teacher-${teacherId}`;
+            teacherItem.innerHTML = `
+                ${name} - ${department} - ${subject} 
+                <button onclick="updateTeacher('${teacherId}', this)">Update</button>
+                <button onclick="deleteTeacher('${teacherId}', this)">Delete</button>
+            `;
+            document.getElementById("teachers").appendChild(teacherItem);
+            document.getElementById("teacherManagement").style.display = "block"; // Show teacher management section
+        }
+
+        function updateTeacher(teacherId, button) {
+            const teacherItem = button.parentElement;
+            const currentDetails = teacherItem.childNodes[0].nodeValue.split(" - ");
+            const newName = prompt("Enter new name:", currentDetails[0].trim());
+            const newDepartment = prompt("Enter new department:", currentDetails[1].trim());
+            const newSubject = prompt("Enter new subject:", currentDetails[2].trim());
+
+            if (newName && newDepartment && newSubject) {
+                teacherItem.innerHTML = `
+                    ${newName} - ${newDepartment} - ${newSubject} 
+                    <button onclick="updateTeacher('${teacherId}', this)">Update</button>
+                    <button onclick="deleteTeacher('${teacherId}', this)">Delete</button>
+                `;
+            }
+        }
+
+        function deleteTeacher(teacherId, button) {
+            const teacherItem = button.parentElement;
+            if (confirm("Are you sure you want to delete this teacher?")) {
+                teacherItem.remove();
+            }
+        }
+
+        function approveStudent(studentId) {
+            if (confirm("Are you sure you want to approve this student?")) {
+                console.log("Approved student:", studentId);
+                // Logic to approve student in Firebase
+            }
+        }
+
+        function deleteStudent(studentId) {
+            if (confirm("Are you sure you want to delete this student?")) {
+                console.log("Deleted student:", studentId);
+                // Logic to delete student in Firebase
+            }
+        }
+    </script>
+</body>
+
+</html>

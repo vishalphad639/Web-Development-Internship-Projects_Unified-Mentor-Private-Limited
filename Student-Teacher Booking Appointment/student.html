@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Student Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <h1>Student Dashboard</h1>
+        <p>Search for Teachers and Book Appointments</p>
+    </header>
+    <main>
+        <div class="container">
+            <section class="card">
+                <h2>Search Teacher</h2>
+                <input type="text" id="searchInput" placeholder="Enter teacher name or subject"
+                    oninput="filterTeachers()">
+                <ul id="teacherList">
+                    <li data-name="John Doe" data-department="Math" data-subject="Algebra">
+                        John Doe - Math - Algebra
+                        <button onclick="showAppointmentForm('John Doe')">Book Appointment</button>
+                    </li>
+                    <li data-name="Jane Smith" data-department="Science" data-subject="Biology">
+                        Jane Smith - Science - Biology
+                        <button onclick="showAppointmentForm('Jane Smith')">Book Appointment</button>
+                    </li>
+                    <li data-name="Michael Johnson" data-department="History" data-subject="World History">
+                        Michael Johnson - History - World History
+                        <button onclick="showAppointmentForm('Michael Johnson')">Book Appointment</button>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="appointmentSection" class="card" style="display:none;">
+                <h2>Book Appointment with <span id="teacherName"></span></h2>
+                <form id="appointmentForm">
+                    <input type="date" id="appointmentDate" required>
+                    <textarea id="message" placeholder="Enter your message..." required></textarea>
+                    <button type="submit">Send Appointment Request</button>
+                </form>
+            </section>
+
+            <section id="bookedAppointmentsSection" class="card" style="display:none;">
+                <h2>Your Booked Appointments</h2>
+                <ul id="bookedAppointmentsList"></ul>
+            </section>
+        </div>
+    </main>
+    <script src="firebaseConfig.js"></script>
+    <script src="student.js"></script>
+    <script>
+        const bookedAppointments = [];
+
+        function filterTeachers() {
+            const searchValue = document.getElementById("searchInput").value.toLowerCase();
+            const teacherItems = document.querySelectorAll("#teacherList li");
+
+            teacherItems.forEach(item => {
+                const name = item.dataset.name.toLowerCase();
+                const subject = item.dataset.subject.toLowerCase();
+
+                if (name.includes(searchValue) || subject.includes(searchValue)) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        function showAppointmentForm(teacher) {
+            document.getElementById("teacherName").textContent = teacher;
+            document.getElementById("appointmentSection").style.display = "block";
+        }
+
+        document.getElementById("appointmentForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const teacher = document.getElementById("teacherName").textContent;
+            const date = document.getElementById("appointmentDate").value;
+            const message = document.getElementById("message").value;
+
+            // Store appointment
+            const appointment = { teacher, date, message };
+            bookedAppointments.push(appointment);
+            updateBookedAppointmentsList();
+
+            // Clear the form and hide the appointment section
+            this.reset();
+            document.getElementById("appointmentSection").style.display = "none";
+        });
+
+        function updateBookedAppointmentsList() {
+            const bookedAppointmentsList = document.getElementById("bookedAppointmentsList");
+            bookedAppointmentsList.innerHTML = ''; // Clear existing list
+
+            bookedAppointments.forEach((appointment, index) => {
+                const appointmentItem = document.createElement("li");
+                appointmentItem.innerHTML = `
+                    ${appointment.teacher} - ${appointment.date} 
+                    <button onclick="updateAppointment(${index})">Update</button>
+                    <button onclick="deleteAppointment(${index})">Delete</button>
+                `;
+                bookedAppointmentsList.appendChild(appointmentItem);
+            });
+
+            document.getElementById("bookedAppointmentsSection").style.display = bookedAppointments.length > 0 ? "block" : "none";
+        }
+
+        function updateAppointment(index) {
+            const appointment = bookedAppointments[index];
+            document.getElementById("teacherName").textContent = appointment.teacher;
+            document.getElementById("appointmentDate").value = appointment.date;
+            document.getElementById("message").value = appointment.message;
+
+            // Remove the appointment from the list
+            bookedAppointments.splice(index, 1);
+            updateBookedAppointmentsList();
+            document.getElementById("appointmentSection").style.display = "block"; // Show form again
+        }
+
+        function deleteAppointment(index) {
+            if (confirm("Are you sure you want to delete this appointment?")) {
+                bookedAppointments.splice(index, 1);
+                updateBookedAppointmentsList();
+            }
+        }
+    </script>
+    <button id="logoutButton">Logout</button>
+    <script src="common.js"></script>
+    <script>
+        document.getElementById("logoutButton").addEventListener("click", logout);
+    </script>
+
+</body>
+
+</html>
