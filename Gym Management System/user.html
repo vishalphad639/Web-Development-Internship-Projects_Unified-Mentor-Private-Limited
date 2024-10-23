@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="user.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>User Dashboard</h1>
+            <nav>
+                <a href="#" id="logout">Logout</a>
+            </nav>
+        </header>
+        <main>
+            <section id="viewDetails">
+                <h2>View Details</h2>
+                <p>Your personal details will be displayed here.</p>
+                <!-- You can fetch and display user details dynamically here -->
+            </section>
+            <section id="searchRecords">
+                <h2>Search Records</h2>
+                <input type="text" id="searchInput" placeholder="Search records...">
+                <button id="searchButton">Search</button>
+                <div id="searchResults">
+                    <!-- Search results will be displayed here -->
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="user.js"></script>
+</body>
+
+</html>

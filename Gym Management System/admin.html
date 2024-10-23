@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>Admin Dashboard</h1>
+            <nav>
+                <a href="#" id="logout">Logout</a>
+            </nav>
+        </header>
+        <aside>
+            <ul>
+                <li><a href="#addMember">Add Member</a></li>
+                <li><a href="#updateDeleteMembers">Update/Delete Members</a></li>
+                <li><a href="#createBills">Create Bills</a></li>
+                <li><a href="#assignFeePackage">Assign Fee Package</a></li>
+                <li><a href="#assignNotification">Assign Notification</a></li>
+                <li><a href="#reportExport">Report Export</a></li>
+                <li><a href="#supplementStore">Supplement Store</a></li>
+                <li><a href="#dietDetails">Diet Details</a></li>
+            </ul>
+        </aside>
+        <main>
+            <section id="addMember">
+                <h2>Add Member</h2>
+                <form>
+                    <input type="text" placeholder="Member Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="tel" placeholder="Phone Number" required>
+                    <button type="submit">Add Member</button>
+                </form>
+            </section>
+            <section id="updateDeleteMembers">
+                <h2>Update/Delete Members</h2>
+                <!-- Implementation for listing and updating/deleting members will go here -->
+            </section>
+            <section id="createBills">
+                <h2>Create Bills</h2>
+                <!-- Implementation for bill creation will go here -->
+            </section>
+            <section id="assignFeePackage">
+                <h2>Assign Fee Package</h2>
+                <!-- Implementation for fee package assignment will go here -->
+            </section>
+            <section id="assignNotification">
+                <h2>Assign Notification</h2>
+                <!-- Implementation for notification assignment will go here -->
+            </section>
+            <section id="reportExport">
+                <h2>Report Export</h2>
+                <!-- Implementation for report export will go here -->
+            </section>
+            <section id="supplementStore">
+                <h2>Supplement Store</h2>
+                <!-- Implementation for supplement store will go here -->
+            </section>
+            <section id="dietDetails">
+                <h2>Diet Details</h2>
+                <!-- Implementation for diet details will go here -->
+            </section>
+        </main>
+    </div>
+    <script src="admin.js"></script>
+</body>
+
+</html>
